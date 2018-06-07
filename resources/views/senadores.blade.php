@@ -56,7 +56,7 @@
     </div>
     <!--<p class="text-center">Pesquisa: @{{pesquisa}} - @{{pesquisa_tipo}}</p>-->
     <div class="bg-light border row mb-2 pt-2 m-0 col-lg-12">
-      <div class="col-lg-6"><h4 class="text-center text-secondary cursor-pointer">senador</h4></div>
+      <div class="col-lg-6"><h4 class="text-center text-secondary cursor-pointer">Senador</h4></div>
       <div class="col-lg-6"><h4 class="text-center text-secondary cursor-pointer">Partido</h4></div>
     </div>
 
@@ -97,7 +97,7 @@
 
 <!-- Modal -->
 <div class="modal fade m-auto" id="senadorModal" tabindex="-1" role="dialog" aria-labelledby="senadorModal" aria-hidden="true">
-  <div class="modal-dialog" role="document" style="width: 50vw !important; max-width: 50vw !important;">
+  <div class="modal-dialog" role="document" style="width: 50vw; max-width: 50vw;">
     <div class="modal-content col-lg-12" style="margin-top:10vh; height:auto; !important;">
       <div class="modal-header">
         <h5 class="modal-title text-center" id="senadorModalLabel">senador</h5>

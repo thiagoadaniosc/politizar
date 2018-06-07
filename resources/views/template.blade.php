@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 	   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+     <link rel="stylesheet" href="/css/app.css">
     <style type="text/css">
 	  * {font-family: 'Source Sans Pro', sans-serif !important;}
       .menu-header {
@@ -82,7 +83,7 @@
 
     </style>
     @yield('style')
-    <title>{{$title}}</title>
+    <title>{{$title}} - {{ $pagina }}</title>
   </head>
   <body ng-app="politizar">
     {{-- <nav class="col-lg-12 login-bar" style="height:50px">

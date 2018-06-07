@@ -18,10 +18,10 @@
     position: absolute;
     z-index: -1;
   }
-  .senadores {
+  .vereadores {
     transition: 1s;
   }
-  .senadores:hover {
+  .vereadores:hover {
     background-color: rgb(232, 232, 232) !important;
     transform:scale(1.03);
   }
@@ -30,7 +30,7 @@
     cursor: pointer;
   }
 
-  .senadores-header {
+  .vereadores-header {
     color: white;
     background-color: rgba(48, 48, 48, 1);
     border-bottom: 4px solid rgb(34, 34, 34)
@@ -41,11 +41,11 @@
 
 @section('template')
 
-  <div class="col-lg-11 pt-0 p-4 mt-4 mb-4 ml-auto mr-auto" style="background-color:#EEEEEE" ng-controller="senadoresCtrl" ng-init="pesquisar();">
+  <div class="col-lg-11 pt-0 p-4 mt-4 mb-4 ml-auto mr-auto" style="background-color:#EEEEEE">
 
-    <h4 class="col-lg-12 p-2 text-center senadores-header">Senadores</h4>
+    <h4 class="col-lg-12 p-2 text-center vereadores-header">Vereadores</h4>
 
-    <div class="row mb-1 pb-1 p-0 m-0 justify-content-start">
+    {{-- <div class="row mb-1 pb-1 p-0 m-0 justify-content-start">
 
       <input type="pesquisa" name="pesquisa" ng-change="pesquisar()" placeholder="Pesquisa..." ng-model="pesquisa" class="form-control col-lg-4 rounded-0">
 
@@ -59,49 +59,42 @@
         <option value="" ng-selected="true">Partido</option>
       </select>
 
-    </div>
-    <!--<p class="text-center">Pesquisa: @{{pesquisa}} - @{{pesquisa_tipo}}</p>-->
+    </div> --}}
     <div class="bg-light border row mb-2 pt-2 m-0 col-lg-12">
-      <div class="col-lg-6"><h4 class="text-center text-secondary cursor-pointer">senador</h4></div>
+      <div class="col-lg-6"><h4 class="text-center text-secondary cursor-pointer">Vereador</h4></div>
       <div class="col-lg-6"><h4 class="text-center text-secondary cursor-pointer">Partido</h4></div>
     </div>
 
-    <div class="senadores border p-2 mb-3 row m-0 cursor-pointer bg-white" ng-click="getsenador(senador.id);" ng-repeat="senador in senadores | filter : pesquisa:sigla.Sigla"
-    data-toggle="modal" data-target="#senadorModal">
+    @foreach ($vereadores as $vereador)
+
+
+
+<div class="vereadores border p-2 mb-3 row m-0 cursor-pointer bg-white">
     <div class="col-lg-2 m-auto">
       <div class="bg-dark m-auto" style="border-radius: 50%;width: 100px; height: 100px; overflow: hidden; border:2px solid rgba(111, 111, 111, .9);">
-        <img width="100px" class=" m-0 p-0" src="@{{senador.IdentificacaoParlamentar.UrlFotoParlamentar}}" alt="">
+        <img width="100px" class=" m-0 p-0" src="/imgs/vereadores/sc/sj/{{$vereador->id}}.jpg" alt="">
       </div>
     </div>
     <div class="col-lg-5 senador-informacoes">
       <ul class="list-unstyled text-capitalize">
-        <li><strong>Nome:</strong> @{{senador.IdentificacaoParlamentar.NomeParlamentar | lowercase}}</li>
-        <li><strong>Estado: </strong> @{{senador.IdentificacaoParlamentar.UfParlamentar}}</li>
-        <li><strong>Sexo:</strong> @{{senador.IdentificacaoParlamentar.SexoParlamentar}}</li>
-        <li><strong>Partido: </strong> @{{senador.IdentificacaoParlamentar.SiglaPartidoParlamentar}}</li>
+        <li><span class="badge badge-secondary rounded-0"><strong>Nome:</strong> {{$vereador->nomeParlamentar}}</span></li>
+        <li><span class="badge badge-primary rounded-0"><strong>Estado: </strong> {{ $vereador->siglaEstado }}</span></li>
+        <li><strong>Sexo:</strong> {{ $vereador->sexo }}</li>
+        <li><strong>Partido: </strong> {{ $vereador->siglaPartido }}</li>
       </ul>
     </div>
 
     <div class="col-lg-5 float-right m-auto senador-partido">
       <h4 class="text-center rounded-circle">
-        <img class="m-auto img-responsive" width="100px" src="imgs/partidos/@{{senador.IdentificacaoParlamentar.SiglaPartidoParlamentar}}.png" alt="">
+        <img class="m-auto img-responsive" width="100px" src="imgs/partidos/{{ $vereador->siglaPartido }}.png" alt="">
       </h4>
-
-      <!--
-      <ul class="list-unstyled">
-      <li>Nome: @{{senador.nome}}</li>
-      <li>Estado: @{{senador.nome}}</li>
-      <li>Lesgislatura: @{{senador.nome}}</li>
-      <li>Sexo: @{{senador.nome}}</li>
-      <li>Partido: @{{senador.nome}}</li>
-    </ul>
-  -->
-
-</div>
+    </div>
 </div>
 
+    @endforeach
 
-<!-- Modal -->
+
+<!-- Modal
 <div class="modal fade m-auto" id="senadorModal" tabindex="-1" role="dialog" aria-labelledby="senadorModal" aria-hidden="true">
   <div class="modal-dialog" role="document" style="width: 50vw !important; max-width: 50vw !important;">
     <div class="modal-content col-lg-12" style="margin-top:10vh; height:auto; !important;">
@@ -184,95 +177,17 @@
 
       </div>
       <div class="modal-footer">
-        <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>-->
+
       </div>
     </div>
   </div>
 </div>
-
-<!--
-<table class="table table-bordered table-sm">
-<thead>
-<tr>
-<th>Foto</th>
-<th>Nome</th>
-<th>Partido</th>
-</tr>
-</thead>
-<tbody>
-<tr ng-repeat="senador in senadores">
-<td>
-<div class="bg-dark" style="border-radius: 50%;width: 100px; height: 100px; overflow: hidden; border:2px solid rgba(111, 111, 111, .9);">
-<img width="100px" class=" m-0 p-0" src="@{{senador.urlFoto}}" alt="">
-</div>
-</td>
-<td>@{{senador.nome}}</td>
-<td>@{{senador.siglaPartido}}</td>
-</tr>
-</tbody>
-</table>
 -->
+
 </div>
 
 
 @endsection
 
 @section('script')
-
-  <script type="text/javascript">
-  app.controller('senadoresCtrl', function($scope, $http){
-    $scope.sigla = '';
-    $scope.pesquisar = function (){
-
-      $http.defaults.headers.get = { 'accept' : 'application/json' };
-
-      if ($scope.pesquisa == "" || $scope.pesquisa == null) {
-        $url2 ='http://legis.senado.gov.br/dadosabertos/senador/lista/atual';
-      }
-
-      $http.get($url2).then(function(response){
-        $scope.senadores = response.data.ListaParlamentarEmExercicio.Parlamentares.Parlamentar;
-        console.log($scope.senadores);
-      });
-
-    };
-
-$scope.getSiglas = function(){
-  // $http.defaults.headers.get = { 'accept' : 'application/json' };
-  $url = "https://legis.senado.gov.br/dadosabertos/senador/partidos";
-  $http.get($url).then(function(response){
-    $scope.siglas = response.data.ListaPartidos.Partidos.Partido;
-    console.log($scope.siglas.Partido);
-  });
-};
-
-$scope.getsenador = function($id){
-  //console.log($id);
-
-  $http.defaults.headers.get = { 'accept' : 'application/json' };
-  $url = "https://dadosabertos.camara.leg.br/api/v2/senadores/" + $id;
-  //console.log($url);
-  $http.get($url).then(function(response){
-    $scope.senador = response.data.dados;
-  });
-  $scope.getDespesas($id, 10);
-};
-
-$scope.getDespesas = function($idsenador, $qt) {
-  $http.defaults.headers.get = { 'accept' : 'application/json' };
-  $url = 'https://dadosabertos.camara.leg.br/api/v2/senadores/' + $idsenador + '/despesas?ordem=DESC&ordenarPor=dataDocumento'+ '&itens='+$qt;
-  console.log($url);
-  $http.get($url).then(function(response){
-    $scope.senador_despesas = response.data.dados;
-  });
-}
-
-
-$scope.getMes = function($mesNumber){
-  var meses = ['0', 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-  return meses[$mesNumber];
-};
-
-}); // Fim do Controller
-</script>
 @endsection

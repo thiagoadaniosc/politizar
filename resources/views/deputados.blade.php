@@ -102,8 +102,8 @@
 
 <!-- Modal -->
 <div class="modal fade m-auto" id="deputadoModal" tabindex="-1" role="dialog" aria-labelledby="deputadoModal" aria-hidden="true">
-  <div class="modal-dialog" role="document" style="width: 50vw !important; max-width: 50vw !important;">
-    <div class="modal-content col-lg-12" style="margin-top:10vh; height:auto; !important;">
+  <div class="modal-dialog" role="document" style="width: 50vw; max-width: 50vw;">
+    <div class="modal-content col-lg-12" style="margin-top:10vh; height:auto;">
       <div class="modal-header">
         <h5 class="modal-title text-center" id="deputadoModalLabel">Deputado</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -154,8 +154,8 @@
 
         <hr>
 
-        <div class="row p-auto col-lg-12">
-          <h4 class=" col-lg-12">Ultimas Despesas</h4>
+        <div class="row p-auto col-lg-12 m-0" style="overflow: auto;">
+          <h4 class=" col-lg-12 pt-1 pb-1 bg-secondary text-white">Ultimas Despesas</h4>
 
           <table class="table table-bordered table-sm">
             <thead>
@@ -176,6 +176,33 @@
                 <td>@{{despesa.nomeFornecedor}}</td>
                 <td>@{{despesa.valorDocumento | currency:'R$: ':2}}</td>
                 <td>@{{despesa.dataDocumento | date : 'dd/MM/yyyy' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        {{-- <hr> --}}
+        <div class="row p-auto col-lg-12 m-0" style="overflow: auto;">
+          <h4 class="col-lg-12 pt-1 pb-1 bg-dark text-white">Ultimas Propostas</h4>
+
+          <table class="table table-bordered table-sm">
+            <thead>
+              <tr>
+                <th style="width: 80%;">Descrição</th>
+                {{-- <th>Mês</th> --}}
+                <th class="text-center">Tipo</th>
+                <th class="text-center">Ano</th>
+                {{-- <th>Valor</th> --}}
+                {{-- <th>Data da Nota</th> --}}
+              </tr>
+            </thead>
+            <tbody>
+              <tr  ng-repeat="preposicao in deputado_preposicoes" style="font-size:.9em">
+                <td class="text-justify">@{{preposicao.ementa}}</td>
+                {{-- <td>@{{getMes(despesa.mes)}}</td> --}}
+                <td class="text-center">@{{preposicao.siglaTipo | uppercase}}</td>
+                <td class="text-center">@{{preposicao.ano}}</td>
+                {{-- <td>@{{preposicao.valorDocumento | currency:'R$: ':2}}</td> --}}
+                {{-- <td>@{{preposicao.dataDocumento | date : 'dd/MM/yyyy' }}</td> --}}
               </tr>
             </tbody>
           </table>
@@ -437,6 +464,7 @@ $scope.getDeputado = function($id){
     $scope.deputado = response.data.dados;
   });
   $scope.getDespesas($id, 10);
+  $scope.getPreposicoes($id, 10);
 };
 
 $scope.getDespesas = function($idDeputado, $qt) {
@@ -456,7 +484,16 @@ $scope.getPartido = function($uriPartido){
     return response.data.dados.urlLogo;
   });
 
-  //console.log(res);
+};
+
+$scope.getPreposicoes = function ($idDeputado, $qt){
+  $url = 'https://dadosabertos.camara.leg.br/api/v2/proposicoes?idAutor=' + $idDeputado +  '+&ordem=DESC&ordenarPor=id&itens=' + $qt;
+      console.log($url);
+  $http.get($url).then(function(response){
+    $scope.deputado_preposicoes = response.data.dados;
+    console.log($scope.deputado_preposicoes);
+  });
+
 };
 
 $scope.getMes = function($mesNumber){

@@ -14,7 +14,11 @@ class VereadoresController extends Controller
      */
     public function index()
     {
-    
+      $vereadores = Vereador::all();
+      $dados = [
+        'vereadores' => $vereadores
+      ];
+      return view('vereadores', $dados);
     }
 
     /**

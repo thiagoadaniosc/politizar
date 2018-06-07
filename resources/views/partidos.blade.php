@@ -70,7 +70,7 @@
 
 @section('template')
 
-  <div class="col-lg-11 pt-0 p-4 mt-4 mb-4 ml-auto mr-auto" style="background-color:#F5F5F5" ng-controller="senadoresCtrl" ng-init="pesquisar();">
+  <div class="col-lg-11 pt-0 p-4 mt-4 mb-4 ml-auto mr-auto" style="background-color:#F5F5F5">
 
     <h4 class="col-lg-12 p-2 text-center partidos-header">Partidos Políticos</h4>
     <span class="badge badge-dark float-left rounded-0">Total de partidos: {{ $partidos_total }}</span>
@@ -84,7 +84,7 @@
 
     <hr>
     <hr>
-    <ul class="row  list-unstyled">
+    <ul class="row lista-partidos list-unstyled">
     @foreach ($partidos as $partido)
 
       <li class="col-lg-4 col-xl-3 mb-4">
