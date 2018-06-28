@@ -142,35 +142,35 @@
           </ul>
         </div>
 
-        <hr>
-        <!--
-        <div class="row p-auto col-lg-12">
-          <h4 class=" col-lg-12">Ultimas Despesas</h4>
+        <hr />
+        <div class="row p-auto col-lg-12 m-0" style="overflow: auto;">
+          <h4 class=" col-lg-12 pt-1 pb-1 bg-secondary text-white">Ultimas Despesas</h4>
+        <table id="senador-despesa" class="table table-striped table-bordered table-sm"  style="width:100%">
 
-          <table class="table table-bordered table-sm">
-            <thead>
-              <tr>
-                <th>Descrição</th>
-                <th>Mês</th>
-                <th>Ano</th>
-                <th>Estabelecimento</th>
-                <th>Valor</th>
-                <th>Data da Nota</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr  ng-repeat="despesa in senador_despesas" style="font-size:.9em">
-                <td class=" text-capitalize">@{{despesa.tipoDespesa |lowercase}}</td>
-                <td>@{{getMes(despesa.mes)}}</td>
-                <td>@{{despesa.ano | lowercase}}</td>
-                <td>@{{despesa.nomeFornecedor}}</td>
-                <td>@{{despesa.valorDocumento | currency:'R$: ':2}}</td>
-                <td>@{{despesa.dataDocumento | date : 'dd/MM/yyyy' }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      -->
+          <thead>
+
+          <tr>
+
+            <th>Descrição</th>
+
+            <th>Tipo do Documento</th>
+
+            <th>Empresa</th>
+
+            <th>Mês</th>
+
+            <th>Ano</th>
+
+            <th>Data do Documento</th>
+            <th>Valor</th>
+
+            </tr>
+
+          </thead>
+
+
+        </table>
+      </div>
 
       </div>
       <div class="modal-footer">
@@ -180,34 +180,15 @@
   </div>
 </div>
 
-<!--
-<table class="table table-bordered table-sm">
-<thead>
-<tr>
-<th>Foto</th>
-<th>Nome</th>
-<th>Partido</th>
-</tr>
-</thead>
-<tbody>
-<tr ng-repeat="senador in senadores">
-<td>
-<div class="bg-dark" style="border-radius: 50%;width: 100px; height: 100px; overflow: hidden; border:2px solid rgba(111, 111, 111, .9);">
-<img width="100px" class=" m-0 p-0" src="@{{senador.urlFoto}}" alt="">
-</div>
-</td>
-<td>@{{senador.nome}}</td>
-<td>@{{senador.siglaPartido}}</td>
-</tr>
-</tbody>
-</table>
--->
 </div>
 
 
 @endsection
 
 @section('script')
+  <script src="https://cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json" charset="utf-8"></script>
+  <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js" charset="utf-8"></script>
+  <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js" charset="utf-8"></script>
 
   <script type="text/javascript">
   app.controller('senadoresCtrl', function($scope, $http){
@@ -245,7 +226,8 @@ $scope.getsenador = function($id){
   $http.get($url).then(function(response){
     $scope.senador = response.data.DetalheParlamentar.Parlamentar;
   });
-  //$scope.getDespesas($id, 10);
+  $scope.getDespesas($id);
+
 };
 
 $scope.getHistorico = function() {
@@ -257,13 +239,57 @@ $scope.getHistorico = function() {
   });
 };
 
-$scope.getDespesas = function($idsenador, $qt) {
-  $http.defaults.headers.get = { 'accept' : 'application/json' };
-  $url = 'https://dadosabertos.camara.leg.br/api/v2/senadores/' + $idsenador + '/despesas?ordem=DESC&ordenarPor=dataDocumento'+ '&itens='+$qt;
-  //console.log($url);
-  $http.get($url).then(function(response){
-    $scope.senador_despesas = response.data.dados;
+$scope.getDespesas = function($id) {
+  // $http.defaults.headers.get = { 'accept' : 'application/json' };
+
+  $url = 'http://www.meucongressonacional.org/api/senadores/'  + $id + '/gastos';
+  $('#senador-despesa').DataTable().clear();
+  $('#senador-despesa').DataTable().destroy();
+  $('#senador-despesa').DataTable({
+    "ajax" : {
+      url : $url,
+      dataSrc: 'gastos'
+    },
+   columns: [
+     { data: 'desc1' },
+     { data: 'tipoDoc' },
+     { data: 'empresaNome' },
+     { data: 'mes' },
+     { data: 'ano' },
+     { data: 'dataFormatted' },
+     { data: 'gasto' }
+   ],
+   "oLanguage": {
+      "sEmptyTable": "Nenhum registro encontrado",
+      "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+      "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+      "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+      "sInfoPostFix": "",
+      "sInfoThousands": ".",
+      "sLengthMenu": "_MENU_ resultados por página",
+      "sLoadingRecords": "Carregando...",
+      "sProcessing": "Processando...",
+      "sZeroRecords": "Nenhum registro encontrado",
+      "sSearch": '',
+        "sSearch": "Pesquisar: ",
+        "oPaginate": {
+          "sNext": "Próximo",
+          "sPrevious": "Anterior",
+          "sFirst": "Primeiro",
+          "sLast": "Último"
+          },
+      "oAria": {
+        "sSortAscending": ": Ordenar colunas de forma ascendente",
+        "sSortDescending": ": Ordenar colunas de forma descendente"
+      }
+    }
   });
+        $("#senador-despesa_filter").addClass('float-right');
+  // console.log($url);
+  // $http.get($url).then(function(response){
+    // $scope.senador_gastos = response.data.gastos;
+    // console.log($scope.senador_gastos);
+  // });
 }
 
 

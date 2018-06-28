@@ -157,7 +157,7 @@
         <div class="row p-auto col-lg-12 m-0" style="overflow: auto;">
           <h4 class=" col-lg-12 pt-1 pb-1 bg-secondary text-white">Ultimas Despesas</h4>
 
-          <table class="table table-bordered table-sm">
+          <table class="table table-bordered table-hover table-sm">
             <thead>
               <tr>
                 <th>Descrição</th>
@@ -169,7 +169,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr  ng-repeat="despesa in deputado_despesas" style="font-size:.9em">
+              <tr ng-repeat="despesa in deputado_despesas" style="font-size:.9em; cursor:pointer;">
                 <td class=" text-capitalize">@{{despesa.tipoDespesa |lowercase}}</td>
                 <td>@{{getMes(despesa.mes)}}</td>
                 <td>@{{despesa.ano | lowercase}}</td>
@@ -184,7 +184,7 @@
         <div class="row p-auto col-lg-12 m-0" style="overflow: auto;">
           <h4 class="col-lg-12 pt-1 pb-1 bg-dark text-white">Ultimas Propostas</h4>
 
-          <table class="table table-bordered table-sm">
+          <table class="table table-bordered table-hover table-sm">
             <thead>
               <tr>
                 <th style="width: 80%;">Descrição</th>
@@ -196,7 +196,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr  ng-repeat="preposicao in deputado_preposicoes" style="font-size:.9em">
+              <tr  ng-repeat="preposicao in deputado_preposicoes" style="font-size:.9em; cursor:pointer;">
                 <td class="text-justify">@{{preposicao.ementa}}</td>
                 {{-- <td>@{{getMes(despesa.mes)}}</td> --}}
                 <td class="text-center">@{{preposicao.siglaTipo | uppercase}}</td>

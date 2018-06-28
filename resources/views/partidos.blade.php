@@ -73,14 +73,14 @@
   <div class="col-lg-11 pt-0 p-4 mt-4 mb-4 ml-auto mr-auto" style="background-color:#F5F5F5">
 
     <h4 class="col-lg-12 p-2 text-center partidos-header">Partidos Políticos</h4>
-    <span class="badge badge-dark float-left rounded-0">Total de partidos: {{ $partidos_total }}</span>
+    <span class="badge badge-dark float-left rounded-0">Total de partidos: <span class="counter">{{ $partidos_total }} </span></span>
 
-    <span class="badge badge-danger float-left ml-1 rounded-0">Partidos de Esquerda: {{ $partidos_esquerda}}</span>
-    <span class="badge badge-danger float-left ml-1 rounded-0">Partidos de Centro-Esquerda: {{ $partidos_centro_esquerda }}</span>
+    <span class="badge badge-danger float-left ml-1 rounded-0">Partidos de Esquerda: <span class="counter">{{ $partidos_esquerda}}</span></span>
+    <span class="badge badge-danger float-left ml-1 rounded-0">Partidos de Centro-Esquerda: <span class="counter">{{ $partidos_centro_esquerda }}</span></span>
 
-    <span class="badge badge-primary float-right ml-1 rounded-0">Partidos de Direita: {{$partidos_direita}}</span>
-    <span class="badge badge-secondary float-right ml-1 rounded-0">Partidos de Centro-Direita: {{ $partidos_centro_direita }}</span>
-    <span class="badge badge-warning float-right ml-1 rounded-0">Partidos de Centro: {{ $partidos_centro }}</span>
+    <span class="badge badge-primary float-right ml-1 rounded-0">Partidos de Direita: <span class="counter">{{$partidos_direita}}</span></span>
+    <span class="badge badge-secondary float-right ml-1 rounded-0">Partidos de Centro-Direita: <span class="counter">{{ $partidos_centro_direita }}</span></span>
+    <span class="badge badge-warning float-right ml-1 rounded-0">Partidos de Centro: <span class="counter">{{ $partidos_centro }}</span></span>
 
     <hr>
     <hr>
@@ -92,7 +92,7 @@
           <div class="col-lg-12 row partido-card rounded card m-0 p-0" style="height:200px">
             <div class="text-white m-1 partido-header">
               <span class="badge badge-primary float-left rounded-0">{{$partido->sigla}}</span>
-              <span class="badge badge-secondary rounded-circle m-0 float-right">{{ $partido->numero_legenda }}</span>
+              <span class="badge badge-secondary rounded-circle m-0 float-right"><span class="counter">{{ $partido->numero_legenda }}</span></span>
             </div>
             <img class="m-auto" width="120" src="/imgs/partidos/{{$partido->sigla}}.png" alt="">
             <div class="partido-footer">
@@ -120,4 +120,17 @@
 
 @section('script')
 
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/3.0.1/jquery-migrate.min.js"></script>
+ {{-- <script src="http://code.jquery.com/jquery-migrate-3.0.0.js"></script> --}}
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.js"></script>
+<script type="text/javascript">
+$(document).ready(function($) {
+  $('.counter').counterUp({
+      delay: 20,
+      time: 1000
+  });
+});
+</script>
 @endsection
